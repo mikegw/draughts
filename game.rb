@@ -2,8 +2,8 @@ class Game
 
   attr_reader :board
 
-  def initialize
-    @board = DraughtsBoard.new
+  def initialize(starting_pos = DraughtsBoard.new)
+    @board = starting_pos
     @players = {
       :red => Player.new(:red, @board),
       :green => Player.new(:green, @board)

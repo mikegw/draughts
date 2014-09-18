@@ -44,7 +44,7 @@ class Player
   def pickup_piece_between(sq1, sq2)
     sq_between = (sq1 + sq2) / 2
     if @board[sq_between]
-      captured , @board[sq_between] =  @board[sq_between], 0
+      captured , @board[sq_between] =  @board[sq_between], nil
       return captured
     else
       raise "confused!"

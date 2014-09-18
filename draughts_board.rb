@@ -26,6 +26,11 @@ class DraughtsBoard
     nil
   end
 
+  #REMOVE THIS
+  def squares=(custom_sq_setup)
+    @squares = custom_sq_setup
+  end
+
   def squares
     @squares
   end
