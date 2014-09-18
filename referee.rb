@@ -8,6 +8,8 @@ class Referee
 
   def check_move(start_sq, end_sq)
     #p ['start_end', start_sq, end_sq]
+
+
     #both valid positions
     unless valid_sq?(start_sq) &&  valid_sq?(end_sq)
       raise IMError.new("No such square!")
@@ -45,6 +47,7 @@ class Referee
         raise IMError.new("Can't jump over your own piece!")
       end
       return :jumped
+    else
       # no mandatory jumps
       raise IMError.new("Should have jumped!") if jumps_available?
       return :end_turn

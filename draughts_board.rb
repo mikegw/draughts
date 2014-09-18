@@ -79,6 +79,7 @@ class DraughtsBoard
 
   def render
     system('clear')
+    puts " " + (0..7).to_a.join(" ")
     @squares.reverse.each_with_index do |row, i|
       print (@board_size - i - 1).to_s
       row_strs = row.map{|sq| sq ? sq.to_s : "  "}
@@ -89,6 +90,7 @@ class DraughtsBoard
 
       puts (@board_size - i - 1).to_s
     end
+    puts " " + (0..7).to_a.join(" ")
     "A board!"
   end
 

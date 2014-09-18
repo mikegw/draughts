@@ -13,10 +13,19 @@ class Player
     @captured_this_turn = []
     begin
       print "To move:"
-      move_start = sq(*gets.chomp.split(",").map(&:to_i))
-      print "move to:"
-      move_end = sq(*gets.chomp.split(",").map(&:to_i))
+      move_start_str = gets.chomp
+      unless move_start_str =~ /^[0-9]+,[0-9]+$/
+        raise IMError.new('I don\'t under stand your move')
+      end
 
+      print "move to:"
+      move_end_str = gets.chomp
+      unless move_end_str =~ /^[0-9]+,[0-9]+$/
+        raise IMError.new('I don\'t under stand your move')
+      end
+
+      move_start = sq(*move_start_str.split(",").map(&:to_i))
+      move_end = sq(*move_end_str.split(",").map(&:to_i))
       move_result = @referee.check_move(move_start, move_end)
       @board.move_piece(move_start, move_end)
       if move_result == :jumped
