@@ -1,6 +1,7 @@
 class Piece
 
-  UNICODE_REPS = {red: "\u{26AA} ", green: "\u{26AB} "}
+  MAN_REPS = {red: "\u{26AA} ", green: "\u{26AB} "}
+  KING_REPS = {red: "\u{24C0} ", green: "\u{1F15A} "}
 
   STANDARD_DIRS = [[1, 1], [1, -1]]
 
@@ -30,7 +31,7 @@ class Piece
   end
 
   def to_s
-    UNICODE_REPS[self.color]
+    @king ? KING_REPS[self.color] : MAN_REPS[self.color]
   end
 
 

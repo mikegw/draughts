@@ -37,5 +37,8 @@ debug_squares = [[nil, crd, nil, nil, nil, crd, nil, crd],
 test_board = DraughtsBoard.new
 test_board.squares = debug_squares
 
+#puts "\u{26AA} " + "\u{26AB}"
+#puts "\u{24C0} " + "\u{1F15A} "
+
 game = Game.new(test_board)
 game.play

@@ -16,7 +16,7 @@ class Game
     #start_game
 
     until game_over?
-      @board.render
+      render
       @players[@current].take_turn
       @captured_pieces[@current] += @players[@current].captured_this_turn
       switch_player
@@ -25,10 +25,21 @@ class Game
     end_game
   end
 
+  def render
+    system('clear')
+    puts " " + @captured_pieces[other_player].map(&:to_s).join
+    @board.render
+    puts " " + @captured_pieces[@current].map(&:to_s).join
+  end
+
 
   def switch_player
-    @current = ( (@current == :green) ? :red : :green )
+    @current = other_player
     @board.swap_sides
+  end
+
+  def other_player
+    (@current == :green) ? :red : :green
   end
 
   def start_game
