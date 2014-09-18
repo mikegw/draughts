@@ -17,9 +17,9 @@ class Game
 
     until game_over?
       render
-      @players[@current].take_turn
+      turn_finished = @players[@current].take_turn
       @captured_pieces[@current] += @players[@current].captured_this_turn
-      switch_player
+      switch_player if turn_finished
     end
 
     end_game
@@ -46,10 +46,10 @@ class Game
   def start_game
     puts "Draughts!"
   end
-  
+
   def end_game
   end
-  
+
   #Game over methods
 
   def game_over?

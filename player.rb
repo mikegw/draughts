@@ -34,13 +34,15 @@ class Player
         @captured_this_turn << pickup_piece_between(move_start, move_end)
         #@board.render
         if @referee.jumps_available?
-          take_turn
+          return false
         end
       end
     rescue IMError => e
       puts e
       retry
     end
+
+    :turn_finished
   end
 
   def pickup_piece_between(sq1, sq2)
