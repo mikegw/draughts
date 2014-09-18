@@ -13,7 +13,7 @@ class Game
   end
 
   def play
-    #start_game
+    start_game
 
     until game_over?
       render
@@ -25,13 +25,14 @@ class Game
     end_game
   end
 
+
+  #Play methods
   def render
     system('clear')
     puts " " + @captured_pieces[other_player].map(&:to_s).join
     @board.render
     puts " " + @captured_pieces[@current].map(&:to_s).join
   end
-
 
   def switch_player
     @current = other_player
@@ -45,9 +46,13 @@ class Game
   def start_game
     puts "Draughts!"
   end
+  
+  def end_game
+  end
+  
+  #Game over methods
 
   def game_over?
-    p ['game_over?', both_players_have_pieces?, both_players_can_move?]
     !(both_players_have_pieces? && both_players_can_move?)
   end
 
@@ -64,7 +69,6 @@ class Game
   end
 
   def both_players_can_move?
-    p ['both_players_can_move', player_can_move?,  other_player_can_move?]
     player_can_move? && other_player_can_move?
   end
 
@@ -96,7 +100,6 @@ class Game
     end
   end
 
-
   def other_player_can_move?
     player_can_move?(:switched)
   end
@@ -109,6 +112,4 @@ class Game
     false
   end
 
-  def end_game
-  end
 end
