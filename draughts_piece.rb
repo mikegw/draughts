@@ -30,6 +30,10 @@ class Piece
     slides.map{|x,y| [2 * x, 2 * y]}
   end
 
+  def moves
+    slides + jumps
+  end
+
   def to_s
     @king ? KING_REPS[self.color] : MAN_REPS[self.color]
   end

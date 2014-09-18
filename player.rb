@@ -1,6 +1,6 @@
 class Player
 
-  attr_reader :captured_this_turn
+  attr_reader :captured_this_turn, :referee
 
   def initialize(color, board)
     @color = color
@@ -26,11 +26,13 @@ class Player
 
       move_start = sq(*move_start_str.split(",").map(&:to_i))
       move_end = sq(*move_end_str.split(",").map(&:to_i))
+
       move_result = @referee.check_move(move_start, move_end)
       @board.move_piece(move_start, move_end)
+
       if move_result == :jumped
         @captured_this_turn << pickup_piece_between(move_start, move_end)
-        @board.render
+        #@board.render
         if @referee.jumps_available?
           take_turn
         end

@@ -6,7 +6,7 @@ class Referee
   end
   #tests all the moves, raises errors if invalid
 
-  def check_move(start_sq, end_sq)
+  def check_move(start_sq, end_sq, option = :standard)
     #p ['start_end', start_sq, end_sq]
 
 
@@ -33,7 +33,6 @@ class Referee
       raise IMError.new("There's already a piece there!")
     end
 
-
     #if jumping
     #p ['move_is_jump:', move_is_jump?(move)]
     if move_is_jump?(move)
@@ -49,6 +48,12 @@ class Referee
       return :jumped
     else
       # no mandatory jumps
+
+      return :end_turn if option == :quick
+
+      #only want to get here if we're looking for whether the player
+      #can make the move...
+
       raise IMError.new("Should have jumped!") if jumps_available?
       return :end_turn
     end
