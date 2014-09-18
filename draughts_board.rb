@@ -58,6 +58,7 @@ class DraughtsBoard
 
   def move_piece(start_sq, end_sq)
     self[end_sq], self[start_sq] = self[start_sq], nil
+    self[end_sq].promote if end_sq[0] == 7
   end
 
   def pieces_same_color?(sq1, sq2)
