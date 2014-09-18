@@ -29,7 +29,7 @@ class Player
       move_result = @referee.check_move(move_start, move_end)
       @board.move_piece(move_start, move_end)
       if move_result == :jumped
-        @captured_this_turn << piece_between(move_start, move_end)
+        @captured_this_turn << pickup_piece_between(move_start, move_end)
         @board.render
         if @referee.jumps_available?
           take_turn
