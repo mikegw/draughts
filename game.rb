@@ -29,6 +29,7 @@ class Game
   #Play methods
   def render
     system('clear')
+    puts "    Draughts!"
     puts " " + @captured_pieces[other_player].map(&:to_s).join
     @board.render
     puts " " + @captured_pieces[@current].map(&:to_s).join

@@ -12,31 +12,24 @@ class Player
   def take_turn
     @captured_this_turn = []
     begin
-      print "To move:"
-      move_start_str = gets.chomp
-      unless move_start_str =~ /^[0-9]+,[0-9]+$/
-        raise IMError.new('I don\'t under stand your move')
-      end
+      #get moves
+      move_start = get_move_start
+      move_end = get_move_end
 
-      print "move to:"
-      move_end_str = gets.chomp
-      unless move_end_str =~ /^[0-9]+,[0-9]+$/
-        raise IMError.new('I don\'t under stand your move')
-      end
-
-      move_start = sq(*move_start_str.split(",").map(&:to_i))
-      move_end = sq(*move_end_str.split(",").map(&:to_i))
-
+      #make move if allowed
       move_result = @referee.check_move(move_start, move_end)
       @board.move_piece(move_start, move_end)
 
+      #decide whether to allow player another turn
       if move_result == :jumped
         @captured_this_turn << pickup_piece_between(move_start, move_end)
         #@board.render
-        if @referee.jumps_available?
+        if @referee.piece_can_jump?(move_end)
           return false
         end
       end
+
+    #rety if invalid move error
     rescue IMError => e
       puts e
       retry
@@ -53,6 +46,26 @@ class Player
     else
       raise "confused!"
     end
+  end
+
+  def get_move_start
+    print "To move:"
+    move_start_str = gets.chomp
+    unless move_start_str =~ /^[0-9]+,[0-9]+$/
+      raise IMError.new('I don\'t under stand your move')
+    end
+
+    sq(*move_start_str.split(",").map(&:to_i))
+  end
+
+  def get_move_end
+    print "move to:"
+    move_end_str = gets.chomp
+    unless move_end_str =~ /^[0-9]+,[0-9]+$/
+      raise IMError.new('I don\'t under stand your move')
+    end
+
+    move_end = sq(*move_end_str.split(",").map(&:to_i))
   end
 end
 

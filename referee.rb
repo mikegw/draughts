@@ -15,7 +15,6 @@ class Referee
       jump_sq = start_sq + move_dir(move)
       check_jumping_over_piece(jump_sq)
       check_piece_is_opposing_color(jump_sq, start_sq)
-
       return :jumped
     else
       # no mandatory jumps
@@ -88,14 +87,21 @@ class Referee
 
   def jumps_available?
     @board.each_piece_with_sq do |piece, sq|
-      piece.jumps.each do |jump|
-        begin
-          check_move(sq, sq + jump)
-        rescue IMError
-          next
-        end
-        return true
+      return true if piece_can_jump?(sq)
+    end
+
+    false
+  end
+
+  def piece_can_jump?(sq)
+    piece = @board[sq]
+    piece.jumps.each do |jump|
+      begin
+        check_move(sq, sq + jump)
+      rescue IMError
+        next
       end
+      return true
     end
 
     false
