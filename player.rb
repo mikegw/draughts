@@ -70,6 +70,89 @@ class Player
 end
 
 
+class ComputerPlayer < Player
+  def look_at_moves(board = @board.dup, first_move = nil, depth = 0)
+  end
+
+  def minimax(board = @board.dup, depth = 6, maximizingPlayer, interesting)
+    if depth == 0 or board.won? or interesting == false
+      return [board.score(@color), move]
+    if maximizingPlayer
+      bestValue = -100
+
+      each_available_move do |start_sq, end_sq, move_result|
+        new_board = board.dup
+        new_board.move_piece(start_sq, end_sq)
+
+        if move_result == :jumped
+          pickup_piece_between(start_sq, end_sq)
+          if @referee.piece_can_jump?(end_sq)
+            val, move = minimax(new_board, depth, true, true)
+          else
+            val, move = minimax(new_board, depth - 1, false, true)
+          end
+        else
+          val, move = minimax(new_board, depth - 1, false, false)
+        end
+
+        best_val, best_move = (val > best_val ? val, move : best_val, best_move)
+      end
+      return [best_val, best_move]
+    else
+      bestValue = 100
+      each_available_move do |start_sq, end_sq, move_result|
+        new_board = board.dup
+        new_board.move_piece(start_sq, end_sq)
+
+        if move_result == :jumped
+          pickup_piece_between(start_sq, end_sq)
+          if @referee.piece_can_jump?(end_sq)
+            val, move = minimax(new_board, depth, true, true)
+          else
+            val, move = minimax(new_board, depth - 1, false, true)
+          end
+        else
+          val, move = minimax(new_board, depth - 1, false, false)
+        end
+
+        best_val, best_move = (val > best_val ? val, move : best_val, best_move)
+      end
+      return [best_val, best_move]
+
+
+  end
+
+  def get_move
+    best_move = [[],[]]
+    best_score = 0
+
+    # score by how many how many pieces are exchanged
+    #look at "interesting" moves in more depth
+
+    #loop through each move on each piece
+    #if move is a slide, find best move for opponent and
+    #pass their score * -1
+  end
+
+  def each_available_move(color, &prc)
+    each_piece_with_sq do |piece, sq|
+      piece.moves.each do |move|
+        begin
+          move_result = @referee.check_move(sq, sq + move))
+        rescue IMError
+          next
+        end
+        prc.call(start_sq, end_sq, move_result)
+      end
+    end
+  nil
+  end
+
+
+
+end
+
+
 
 class IMError < StandardError
 end

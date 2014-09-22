@@ -26,7 +26,7 @@ class DraughtsBoard
     nil
   end
 
-  #REMOVE THIS
+  # REMOVE THIS (ONLY USEFUL FOR TESTING)
   def squares=(custom_sq_setup)
     @squares = custom_sq_setup
   end
@@ -36,7 +36,7 @@ class DraughtsBoard
   end
 
 
-  #Populate methods
+  # Populate methods
 
   def even_row(color)
     row = []
@@ -96,6 +96,16 @@ class DraughtsBoard
     end
     puts " " + (0..7).to_a.join(" ")
     "A board!"
+  end
+
+  # Methods for the computer
+  def dup
+  end
+
+  def score(color)
+    plus = @squares.select {|sq| sq.color == color}.size
+    neg = @squares.select {|sq| sq.color != color}.size
+    plus - neg
   end
 
 
